@@ -20,6 +20,24 @@ export const CISCO_URL =
 export const CISCO_URL_IT =
   "https://10.224.116.90/webacs/loginAction.do?action=login&product=wcs&selectedCategory=en#pageId=full_search_pageId&query=";
 
+export const getPrtgStatus = async () => {
+  return axios
+    .get(`${BASE_API_URL}/status-prtg`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw new Error("getPrtgStatus: Error obteniendo el estado de prtg: ", error);
+    });
+};
+
+export const getVmDevnetStatus = async () => {
+  return axios
+    .get(`${BASE_API_URL}/devnet/vm`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw new Error("getVmDevnetStatus: Error obteniendo el estado de las VMs de Devnet: ", error);
+    });
+};
+
 export const getDatetimeModules = async () => {
   return axios
     .get(`${BASE_API_URL}/status/modules`)

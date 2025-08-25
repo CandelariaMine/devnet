@@ -1,29 +1,40 @@
+.container-dockers-and-maquinas {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 95%;
+  margin: auto;
+  margin-top: 1rem;
+}
 .container-table-dockers {
-  height: calc(100vh - 4rem);
+  flex: 0 0 50%;
+  height: calc(100vh - 10rem);
+  overflow-y: auto;
   display: flex;
   justify-content: center;
-  text-align: center;
 }
 
 .table-dockers {
-  max-height: 80%;
-  width: 70%;
-  margin-top: 4rem;
   border-collapse: collapse;
   overflow-y: auto;
+  width: 95%;
 }
 
 .row-dockers-devnet th,
 .row-dockers-devnet td {
   border: solid 1px black;
+  font-size: 0.8rem;
+  padding: 4px;
 }
 
 .row-dockers-devnet th {
-    height: 3rem;
-    background-color: black;
-    color: white;
-    border-right: solid 1px white
+  background-color: black;
+  color: white;
+  border-right: solid 1px white;
 }
-.row-dockers-devnet td {
-    height: 0.1rem;
+
+.table-dockers tbody tr:hover {
+  background-color: #f5f5f5; /* gris claro */
+  cursor: pointer; /* opcional, da feedback visual */
 }

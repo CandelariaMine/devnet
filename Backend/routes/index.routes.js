@@ -31,6 +31,8 @@ const flotacionOtRoutes = require("./flotacion_ot.routes");
 const mraRoutes = require("./mra.routes");
 const licenciamientosRoutes = require("./licenciamientos.routes");
 const emailRoutes = require("./email.routes");
+const statusPrtgRoutes = require("./status_prtg.routes");
+const devnetRoutes = require("./devnet.routes");
 const router = express.Router();
 
 const allRoutes = (app) => {
@@ -67,6 +69,8 @@ const allRoutes = (app) => {
   router.use("/mra", mraRoutes);
   router.use("/licenciamientos", licenciamientosRoutes);
   router.use("/email", emailRoutes);
+  router.use("/status-prtg", statusPrtgRoutes);
+  router.use("/devnet", devnetRoutes);
 };
 
 module.exports = { allRoutes };

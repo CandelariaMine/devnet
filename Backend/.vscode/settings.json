@@ -3,6 +3,9 @@
     "statusBar.background": "#a11919",
     "statusBar.debuggingBackground": "#19A119",
     "statusBar.noFolderBackground": "#19A119",
-    "statussBar.prominentBackground": "#19A119"
+    "statussBar.prominentBackground": "#19A119",
+    "activityBar.background": "#08323E",
+    "titleBar.activeBackground": "#0B4656",
+    "titleBar.activeForeground": "#F4FBFE"
   }
 }

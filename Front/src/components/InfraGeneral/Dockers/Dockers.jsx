@@ -4,6 +4,8 @@ import { getDataDockers } from "../../../utils/Api-candelaria/api";
 import { Spinner } from "../../Spinner/Spinner";
 import { DatetimeModules } from "../../DatetimeModules/DatetimeModules";
 import "./Dockers.css";
+import { Maquinas } from "./Maquinas";
+import PuffLoader from "react-spinners/PuffLoader";
 
 export function Dockers() {
   const [totalCpu, setTotalCpu] = useState(0.0);
@@ -20,7 +22,7 @@ export function Dockers() {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setLoading(true);
+      setLoading(false);
     }
   };
 
@@ -30,102 +32,101 @@ export function Dockers() {
 
   return (
     <div>
-      <Navbar title={"Dockers DevNet"} />
+      <Navbar title={"Procesos DevNet"} />
       <DatetimeModules module={"devnet"} name={"devnet"} />
-      {loading ? (
-        <Spinner />
-      ) : (
-        <main className="container-table-dockers">
-          <table className="table-dockers">
-            <thead>
-              <tr className="row-dockers-devnet">
-                <th>Contenedor</th>
-                <th>Estado</th>
-                <th>CPU</th>
-                <th>RAM</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dockers.map((docker) => (
-                <tr className="row-dockers-devnet" key={docker.id}>
-                  <td>
-                    {docker.name
-                      .replace("devnet-candelaria_", "")
-                      .replace("_1", "")}
-                  </td>
+      {
+        <div className="container-dockers-and-maquinas">
+          <Maquinas />
+          
+          <main className="container-table-dockers">
+            <table className="table-dockers">
+              <thead>
+                <tr className="row-dockers-devnet">
+                  <th>Contenedor Docker</th>
+                  <th>Estado</th>
+                  <th>CPU</th>
+                  <th>RAM</th>
+                </tr>
+              </thead>
+              {loading ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={4}>
+                      <div style={{ display: "grid", placeContent: "center" }}>
+                        <PuffLoader color="red" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {dockers.map((docker) => (
+                    <tr className="row-dockers-devnet" key={docker.id}>
+                      <td>{docker.name.replace("devnet-candelaria_", "").replace("_1", "")}</td>
+                      <td className={docker.status.includes("running") ? "kpi-green" : "kpi-red"}>{docker.status}</td>
+                      <td
+                      className={
+                        docker.cpu_usage_percent <= 50
+                          ? ""
+                          : docker.cpu_usage_percent > 50 && docker.cpu_usage_percent < 70
+                          ? "kpi-yellow"
+                          : docker.cpu_usage_percent >= 70
+                          ? "kpi-red"
+                          : ""
+                      }
+                    >
+                      {docker.cpu_usage_percent} %
+                    </td>
+                    <td
+                      className={
+                        docker.memory_usage_percent <= 50
+                          ? ""
+                          : docker.memory_usage_percent > 50 && docker.memory_usage_percent < 70
+                          ? "kpi-yellow"
+                          : docker.memory_usage_percent >= 70
+                          ? "kpi-red"
+                          : ""
+                      }
+                    >
+                      {docker.memory_usage_percent} %
+                    </td>
+                  </tr>
+                ))}
+                <tr className="row-dockers-devnet">
+                  <td>Total</td>
+                  <td></td>
                   <td
                     className={
-                      docker.status.includes("running")
-                        ? "kpi-green"
-                        : "kpi-red"
-                    }
-                  >
-                    {docker.status}
-                  </td>
-                  <td
-                    className={
-                      docker.cpu_usage_percent <= 50
+                      totalCpu <= 50
                         ? ""
-                        : docker.cpu_usage_percent > 50 &&
-                          docker.cpu_usage_percent < 70
+                        : totalCpu > 50 && totalCpu < 70
                         ? "kpi-yellow"
-                        : docker.cpu_usage_percent >= 70
+                        : totalCpu >= 70
                         ? "kpi-red"
                         : ""
                     }
                   >
-                    {docker.cpu_usage_percent} %
+                    {totalCpu} %
                   </td>
                   <td
                     className={
-                      docker.memory_usage_percent <= 50
+                      totalMemory <= 50
                         ? ""
-                        : docker.memory_usage_percent > 50 &&
-                          docker.memory_usage_percent < 70
+                        : totalMemory > 50 && totalMemory < 70
                         ? "kpi-yellow"
-                        : docker.memory_usage_percent >= 70
+                        : totalMemory >= 70
                         ? "kpi-red"
                         : ""
                     }
                   >
-                    {docker.memory_usage_percent} %
+                    {totalMemory} %
                   </td>
                 </tr>
-              ))}
-              <tr className="row-dockers-devnet">
-                <td>Total</td>
-                <td></td>
-                <td
-                  className={
-                    totalCpu <= 50
-                      ? ""
-                      : totalCpu > 50 && totalCpu < 70
-                      ? "kpi-yellow"
-                      : totalCpu >= 70
-                      ? "kpi-red"
-                      : ""
-                  }
-                >
-                  {totalCpu} %
-                </td>
-                <td
-                  className={
-                    totalMemory <= 50
-                      ? ""
-                      : totalMemory > 50 && totalMemory < 70
-                      ? "kpi-yellow"
-                      : totalMemory >= 70
-                      ? "kpi-red"
-                      : ""
-                  }
-                >
-                  {totalMemory} %
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </main>
-      )}
+              </tbody>)}
+            </table>
+          </main>
+        </div>
+      }
     </div>
   );
 }

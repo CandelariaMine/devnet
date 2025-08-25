@@ -9,6 +9,7 @@ import {
   getDataAnilloTetraUpDown,
   getDataFlotacionOtUpDown,
   getMraUpDown,
+  getPrtgStatus,
 } from "../../utils/Api-candelaria/api";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { DevicesDash } from "../../components/Devices/DevicesDash/DevicesDash";
@@ -26,6 +27,7 @@ import { useDcsIndicators } from "../../hooks/useDcsIndicators";
 import { useCountDcsClients } from "../../hooks/useCountDcsClients";
 import { HomeDragos } from "../Dragos/Home";
 import "./home.css";
+import { Modal } from "../Modal/Modal";
 
 export function Home() {
   const [dcsCandeIndicators, setDcsCandeIndicators] = useState();
@@ -50,6 +52,8 @@ export function Home() {
   const [dcsIndicators, setDcsIndicators] = useState({});
   const [flotacionData, setFlotacionData] = useState({});
   const [mra, setMra] = useState({});
+  const [statusPrtg, setStatusPrtg] = useState(null);
+  const [showPrtgModal, setShowPrtgModal] = useState(false);
 
   // Estados de spinners
   const [spinnerDcsCandelaria, setSpinnerDcsCandelaria] = useState(true);
@@ -116,22 +120,26 @@ export function Home() {
         let countUps = 0;
         let changeBateryCounter = 0;
 
-        allUps &&
-          allUps.data.forEach((ups) => {
-            if (ups.status_ups === 2) {
-              enLinea++;
+        if (allUps) {
+          allUps.data.forEach(({ status_ups, batery }) => {
+            switch (status_ups) {
+              case 2:
+                enLinea++;
+                break;
+              case 3:
+                usandoBateria++;
+                break;
+              default:
+                otro++;
             }
-            if (ups.status_ups === 3) {
-              usandoBateria++;
-            } else {
-              otro++;
-            }
-            if (ups.batery === 2) {
+
+            if (batery === 2) {
               changeBateryCounter++;
             }
 
             countUps++;
           });
+        }
 
         setDcsCandeIndicators(dcsCandelaria);
         setSpinnerDcsCandelaria(false);
@@ -161,6 +169,26 @@ export function Home() {
     }
   }, [logoutParam]);
 
+  useEffect(() => {
+    const fetchPrtgStatus = async () => {
+      try {
+        const res = await getPrtgStatus();
+        setStatusPrtg(res.prtg_status);
+
+        if (!res.prtg_status) {
+          setShowPrtgModal(true); // abrir modal si PRTG está caído
+        }
+      } catch (error) {
+        console.error("Error al obtener el estado de PRTG", error);
+        setShowPrtgModal(true); // abrir modal si hay error de conexión
+      } finally {
+        setShowPrtgModal(false);
+      }
+    };
+
+    fetchPrtgStatus();
+  }, []);
+
   const overAll = dcsCandeIndicators?.overallKpi?.indicador;
   const disponibilidad = dcsCandeIndicators?.disponibilidad?.indicador;
   const infra_solucion = dcsCandeIndicators?.infraSolucion?.indicador;
@@ -168,6 +196,25 @@ export function Home() {
   return (
     <>
       <Navbar title={"DEVNET"} />
+      <Modal
+        isOpen={showPrtgModal}
+        onClose={() => setShowPrtgModal(false)}
+        title="Error de Conexión"
+        content={
+          <p style={{ padding: "10px", textAlign: "center" }}>
+            El sistema de monitoreo <strong>PRTG</strong> no está funcionando en este momento. Esto puede ocasionar
+            inconsistencias en la información presentada por Devnet.
+          </p>
+        }
+        errorMess="Por favor contactar al área de infraestructura."
+        buttons={[
+          {
+            label: "Cerrar",
+            type: "primary",
+            onClick: () => setShowPrtgModal(false),
+          },
+        ]}
+      />
       <div>
         {showMessage && (
           <div className="home-message-container">
@@ -329,7 +376,7 @@ export function Home() {
                       <td>
                         <p className="light-indicator green-light"></p>En línea
                       </td>
-                      <td>{numberUps}</td>
+                      <td>{enLineaCount}</td>
                     </tr>
                     <tr>
                       <td>
@@ -341,7 +388,7 @@ export function Home() {
                       <td>
                         <p className="light-indicator red-light"></p>Otro
                       </td>
-                      <td>1</td>
+                      <td>{otroCount}</td>
                     </tr>
                     <tr>
                       <td>
