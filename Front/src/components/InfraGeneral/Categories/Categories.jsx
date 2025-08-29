@@ -191,7 +191,6 @@ export function Categories() {
             licenciamientosDown.push(e);
           }
         });
-        console.log(dataKpiLicencamientos);
         setCoresUp(newCoresUp);
         setDistUp(newDistUp);
         setCoresDown(newCoresDown);

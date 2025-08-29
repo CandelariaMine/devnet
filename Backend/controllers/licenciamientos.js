@@ -44,7 +44,6 @@ class LicenciamientosService {
 
   async createLicenciamiento(data) {
     try {
-      console.log(data);
       const existingLicenciamiento = await Licenciamientos.findOne({
         where: { serial: data.serial },
       });

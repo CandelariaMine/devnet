@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { Spinner } from "../../Spinner/Spinner";
 import { InfGenDatetime } from "../../DatetimeModules/InfGenDatetime";
 import "./Details.css";
+import { RouteDefaultTable } from "./Bgp";
 
 export const Details = () => {
   const [devicesInterfaces, setDevicesInterfaces] = useState([]);
@@ -18,6 +19,7 @@ export const Details = () => {
   const [routeStatus, setRouteStatus] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [apList, setApList] = useState([]);
+  const [showBttnBgp, setShowBttnBgp] = useState(false);
   // const [numApPrtg, setNumApPrtg] = useState("Cargando...");
   // const [numApDb, setNumApDb] = useState("Cargando...");
   // const [showOthers, setShowOthers] = useState(false);
@@ -67,6 +69,9 @@ export const Details = () => {
     // Aplicar el valor al estado del filtro
     if (nombreParam) {
       setFilterValue(nombreParam);
+    }
+    if (nombreParam && nombreParam.toLowerCase().includes("sw core")) {
+      setShowBttnBgp(true);
     }
   }, []);
 
@@ -162,6 +167,7 @@ export const Details = () => {
     <div>
       <Navbar title={"Detalles Inf. Gen."} />
       <InfGenDatetime />
+      {showBttnBgp && (<RouteDefaultTable/>)}
       <div className="search-container-details-ig">
         <label htmlFor="search">Buscar por palabre clave</label>
         <input

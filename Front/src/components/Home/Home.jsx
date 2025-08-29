@@ -181,8 +181,6 @@ export function Home() {
       } catch (error) {
         console.error("Error al obtener el estado de PRTG", error);
         setShowPrtgModal(true); // abrir modal si hay error de conexión
-      } finally {
-        setShowPrtgModal(false);
       }
     };
 

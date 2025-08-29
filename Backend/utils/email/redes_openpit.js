@@ -7,11 +7,6 @@ const fetchDataOpenPit = async () => {
     const anilloData = await getApiData("anillo-opit");
     const meshProcessData = await getApiData("mesh-process");
     const tetraData = await getApiData("anillo-tetra");
-    // console.log(meshData);
-    // console.log(fimData);
-    // console.log(anilloData.data);
-    // console.log(meshProcessData.data);
-    // console.log(tetraData.data);
 
     // Procesar Mesh
     const meshUp = meshData.palasOk;

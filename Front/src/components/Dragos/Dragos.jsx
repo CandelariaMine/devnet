@@ -12,7 +12,7 @@ export function Dragos() {
     const fetchData = async () => {
       try {
         const response = await getDataDragos();
-        console.log(response)
+
         setAnilloData(response.data.data);
       } catch (error) {
         console.error(error);

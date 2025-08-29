@@ -11,7 +11,6 @@ export function Maquinas() {
     const fetchVmStatus = async () => {
       try {
         const data = await getVmDevnetStatus();
-        console.log(data.vmData);
         setVm(data.vmData);
         setLoading(false);
       } catch (error) {

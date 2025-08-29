@@ -18,7 +18,6 @@ class FlotacionOtService {
   async getDataFlotacionOtUpDown() {
     try {
       const response = await FlotacionOt.findAll();
-      console.log(response);
       const upElements = [];
       const downElements = [];
 

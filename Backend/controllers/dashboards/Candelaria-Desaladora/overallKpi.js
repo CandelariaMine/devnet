@@ -72,10 +72,6 @@ function overallDesaladora(listAllClients) {
     }
   });
 
-  console.log(puntosTotalesRCS2);
-  console.log(puntosTotalesRC2);
-  console.log(puntosTotalesHSE2);
-
   const porcentajeRCS = parseFloat(
     (((puntosTotalesRCS2 - puntosRestarRCS) / puntosTotalesRCS2) * 100).toFixed(
       2

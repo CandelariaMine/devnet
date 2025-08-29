@@ -156,8 +156,8 @@ function App() {
       </Routes>
 
       <div className="refresh-button-container">
-        <span title={"KPI - Infra General"} style={{ marginLeft: "10px" }} className="refresh-button-container-2">
-          Version 2.4.0
+        <span title={""} style={{ marginLeft: "10px" }} className="refresh-button-container-2">
+          Version 2.5.0
         </span>
         <div className="pause-and-icons-container">
           <IconsPage />
