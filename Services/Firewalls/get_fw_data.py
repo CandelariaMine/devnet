@@ -56,7 +56,7 @@ def diagnose_fw_vdom(host, vdom, channelFw, ssh_timeout=45):
         # Abrir un canal SSH
         channel = client.invoke_shell()
 
-        # Enviar el comando 'config vdom'
+        # Enviar el comando 'config vdom'zz
         channel.send("config vdom\n")
         time.sleep(1)  # Esperar para que el comando se procese
 

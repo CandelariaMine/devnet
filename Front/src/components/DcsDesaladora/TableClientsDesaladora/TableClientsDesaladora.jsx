@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getClientsDesaladora } from "../../../utils/Api-candelaria/api";
-import { PRTG_URL, CISCO_URL } from "../../../utils/Api-candelaria/api";
+import { PRTG_URL, CISCO_URL_IT } from "../../../utils/Api-candelaria/api";
 import "./TableClientsDesaladora.css";
 
 export function TableClientsDesaladora() {
@@ -94,7 +94,7 @@ export function TableClientsDesaladora() {
         </td>
 
         <td>
-          <a href={`${CISCO_URL}${client.ip}&forceLoad=true`} target="_blank">
+          <a href={`${CISCO_URL_IT}${client.ip}&forceLoad=true`} target="_blank">
             {client.data_backup === "true"
               ? `⚠️ ${client.port_cisco}`
               : client.port_cisco}
