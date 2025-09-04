@@ -1,7 +1,7 @@
-const {sequelize} = require("../db/conection");
+const { sequelize } = require("../db/conection");
 const { Sequelize, DataTypes } = require("sequelize");
 
-const Ups= sequelize.define(
+const Ups = sequelize.define(
   "Ups",
   {
     ip: {
@@ -36,6 +36,10 @@ const Ups= sequelize.define(
       type: DataTypes.STRING(100),
       allowNull: true,
     },
+    prioridad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   },
   {
     tableName: "ups",

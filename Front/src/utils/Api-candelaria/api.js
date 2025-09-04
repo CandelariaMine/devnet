@@ -101,6 +101,15 @@ export const getUps = async () => {
     });
 };
 
+export const getUpsKpi = async () => {
+  return axios
+    .get(`${BASE_API_URL}/ups/kpi`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw new Error("UPS: Error del API REST Candealaria : ", error);
+    });
+};
+
 export const getVpn = async () => {
   return axios
     .get(`${BASE_API_URL}/vpn`)

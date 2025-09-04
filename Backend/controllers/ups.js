@@ -13,6 +13,31 @@ class UpsService {
       throw new Error("Error al obtener la información de las UPS");
     }
   }
+
+  async getUpsKpi(ups) {
+    try {
+      let upPoints = 0;
+      let total = 0;
+
+      ups.forEach( e => {
+        total += e.prioridad
+        if ( e.status_prtg.toLowerCase().includes("up")) {
+          upPoints += e.prioridad
+        } 
+      })
+
+      const kpi = Math.round((upPoints / total) * 100)
+      console.log(kpi);
+      return {
+        statusCode: 200,
+        message: "Kpi de las UPS obtenida exitosamente",
+        data: kpi,
+      };
+    } catch (error) {
+      console.error(error)
+      throw new Error("Error al obtener la información de las UPS");
+    }
+  }
 }
 
 // async function getNumberUps() {

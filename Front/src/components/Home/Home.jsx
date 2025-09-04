@@ -10,6 +10,7 @@ import {
   getDataFlotacionOtUpDown,
   getMraUpDown,
   getPrtgStatus,
+  getUpsKpi,
 } from "../../utils/Api-candelaria/api";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { DevicesDash } from "../../components/Devices/DevicesDash/DevicesDash";
@@ -54,6 +55,7 @@ export function Home() {
   const [mra, setMra] = useState({});
   const [statusPrtg, setStatusPrtg] = useState(null);
   const [showPrtgModal, setShowPrtgModal] = useState(false);
+  const [kpiUps, setKpiUps] = useState("Cargando kpi...");
 
   // Estados de spinners
   const [spinnerDcsCandelaria, setSpinnerDcsCandelaria] = useState(true);
@@ -65,6 +67,15 @@ export function Home() {
   const queryParams = new URLSearchParams(location.search);
   const logoutParam = queryParams.get("logout");
   const token = localStorage.getItem("jwtToken");
+
+  useEffect(() => {
+    const getKpiUps = async () => {
+      const response = await getUpsKpi();
+      setKpiUps(response.data);
+    }
+    getKpiUps();
+  }, [])
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -367,7 +378,8 @@ export function Home() {
             </div>
           ) : (
             <>
-              <div className="home-kpi-container">
+              <div className="home-kpi-container ups-kpi-container">
+                <p><span style={{fontWeight: "bold"}}>KPI:</span> {kpiUps}%</p>
                 <table className="home-kpi-table ups-table">
                   <tbody>
                     <tr>

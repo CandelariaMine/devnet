@@ -20,6 +20,19 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+// Obtener kpi Ups
+router.get("/kpi", async (req, res, next) => {
+  try {
+    const ups = await Ups.getUps();
+    const response = await Ups.getUpsKpi(ups.data);
+    res.status(response.statusCode).json({
+      message: response.message,
+      data: response.data,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.get("/:ip", async (req, res, next) => {
 //   try {
