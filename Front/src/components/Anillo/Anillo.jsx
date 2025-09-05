@@ -374,8 +374,8 @@ export const Anillo = () => {
             </div>
             <div className="status-light-anillo-opit-container">
               <p // 10.224.114.113
-                title={statusTitle(19385)}
-                className={`status-light-anillo id19385 ${statusLight(19385)}`}
+                title={statusTitle(20800)}
+                className={`status-light-anillo id20800 ${statusLight(20800)}`}
               >
                 <a style={{ color: "black" }} href={`${PRTG_URL}19372&tabid=1`} target="_blank">
                   Gi1/9
