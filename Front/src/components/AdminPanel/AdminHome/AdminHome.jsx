@@ -16,7 +16,8 @@ export const AdminHome = () => {
     // "/admin/firewalls",
     // "/admin/users",
     // "/admin/actility",
-    "/monitoreo/infraestrucura-general/licenciamientos"
+    "/monitoreo/infraestrucura-general/licenciamientos",
+    "/admin/inventario/cmbd"
   ];
   const titles = [
     // "DCS Clientes Candelaria",
@@ -28,7 +29,8 @@ export const AdminHome = () => {
     // "Firewalls - Canales Internet",
     // "Usuarios",
     // "Actility AP",
-    "Licenciamientos"
+    "Licenciamientos",
+    "Inventario CMDB"
   ];
 
   return (

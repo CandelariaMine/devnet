@@ -60,6 +60,7 @@ import { Mra } from "./components/Mra/Mra";
 import { Dragos } from "./components/Dragos/Dragos";
 import { Licenciamientos } from "./components/InfraGeneral/Licenciamientos/Licenciamientos";
 import { Anillov2 } from "./components/Anillo/Anillov2";
+import { InventarioCmbd } from "./components/Informes/InventarioCmbd";
 
 function App() {
   const location = useLocation();
@@ -109,6 +110,7 @@ function App() {
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/infrageneral/ap" element={<AdminAp />} />
         <Route path="/admin/actility" element={<Actility />} />
+        <Route path="/admin/inventario/cmbd" element={<InventarioCmbd />} />
         <Route path="/login" element={<Login />} />
         <Route path="/monitoreo/pac/clientes" element={<DcsPac />} />
         <Route path="/monitoreo/ojos/clientes" element={<DcsOjos />} />
