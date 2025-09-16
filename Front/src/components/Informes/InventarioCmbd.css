@@ -1,0 +1,72 @@
+.inventario-form-email-main {
+    width: 100%;
+    height: calc(100vh - 10rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.inventario-form-email-main form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 50%;
+}
+
+.inventario-form-email-main form button {
+    width: 20%;
+}
+
+.info-inventario-cmbd {
+    width: 50%;
+    padding: 0.5rem;
+    border: 1px solid rgb(224, 146, 0);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 237, 187);
+    color: rgb(224, 146, 0);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.submit-inventario-button {
+    width: 20%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    height: 30px;
+}
+
+.email-input-inventario {
+    width: 50%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.error-message-inventario-form {
+    color: red;
+    font-size: 0.9rem;
+}
+
+.empty-input-button {
+    width: 20%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(212, 212, 212);
+    color: white;
+    font-size: 1rem;
+    cursor: not-allowed;
+    height: 30px;
+}
