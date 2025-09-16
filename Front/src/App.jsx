@@ -159,7 +159,7 @@ function App() {
 
       <div className="refresh-button-container">
         <span title={""} style={{ marginLeft: "10px" }} className="refresh-button-container-2">
-          Version 2.6.0
+          Version 2.7.0
         </span>
         <div className="pause-and-icons-container">
           <IconsPage />
