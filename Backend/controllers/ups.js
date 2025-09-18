@@ -27,7 +27,6 @@ class UpsService {
       })
 
       const kpi = Math.round((upPoints / total) * 100)
-      console.log(kpi);
       return {
         statusCode: 200,
         message: "Kpi de las UPS obtenida exitosamente",

@@ -10,19 +10,40 @@ const fetchDataUps = async () => {
     let otro = 0;
     let changeBateryCounter = 0;
 
-    allUps.data?.forEach((ups) => {
-      if (ups.status_ups === 2) {
-        enLinea++;
-      } else if (ups.status_ups === 3) {
-        usandoBateria++;
-      } else {
-        otro++;
-      }
+    // allUps.data?.forEach((ups) => {
+    //   if (ups.status_ups === 2) {
+    //     enLinea++;
+    //   } else if (ups.status_ups === 3) {
+    //     usandoBateria++;
+    //   } else {
+    //     otro++;
+    //   }
 
-      if (ups.batery === 2) {
-        changeBateryCounter++;
-      }
-    });
+    //   if (ups.batery === 2) {
+    //     changeBateryCounter++;
+    //   }
+    // });
+
+    if (allUps) {
+      allUps.data.forEach(({ status_ups, batery }) => {
+        switch (status_ups) {
+          case 2:
+            enLinea++;
+            break;
+          case 3:
+            usandoBateria++;
+            break;
+          default:
+            otro++;
+        }
+
+        if (batery === 2) {
+          changeBateryCounter++;
+        }
+
+        countUps++;
+      });
+    }
 
     const ups = `
     <div style="margin-top: 20px; font-family: Arial, sans-serif; padding: 16px;">
