@@ -4,6 +4,7 @@ const { HistoricPrtgDown } = require("../models/historic_prtg_down");
 const { getLocalDateTime } = require("../utils/getLocalDateTime");
 
 // let simulateDown = true;
+// let simulateDown = true;
 async function checkPrtgAndSaveIfDown() {
     try {
         const prtgUrl =
@@ -28,48 +29,57 @@ async function checkPrtgAndSaveIfDown() {
 
         // 🔴 Simulación de caída si no responde o el status no es 200
         if (!data || typeof data !== "object" || response.status !== 200) {
-            // Verificar si ya existe una caída abierta
-            const lastDown = await HistoricPrtgDown.findOne({
-                where: { upDatetime: null },
-                order: [["downDatetime", "DESC"]],
-            });
-
-            if (!lastDown) {
-                // No hay caída abierta → crear nueva
-                await HistoricPrtgDown.create({
-                    downDatetime: getLocalDateTime(),
-                });
-                console.log("PRTG caído 🚨 → Se registró inicio de la caída.");
-            } else {
-                console.log("PRTG sigue caído (ya está registrado).");
-            }
+            await handleDown();
         } else {
-            // 🟢 Caso OK → verificar si hay caída abierta para cerrarla
-            const lastDown = await HistoricPrtgDown.findOne({
-                where: { upDatetime: null },
-                order: [["downDatetime", "DESC"]],
-            });
-
-            if (lastDown) {
-                const upTime = getLocalDateTime();
-                const downTime = new Date(lastDown.downDatetime);
-                const durationMs = new Date(upTime) - downTime;
-                const durationSec = Math.floor(durationMs / 1000);
-
-                await lastDown.update({
-                    upDatetime: upTime,
-                    duration: durationSec, // duración en segundos (puedes ajustarlo a min/hora)
-                });
-
-                console.log(
-                    `✅ PRTG volvió a estar activo. Caída cerrada. Duración: ${durationSec} segundos`
-                );
-            } else {
-                console.log("PRTG activo (no había caída abierta).");
-            }
+            await handleUp();
         }
     } catch (error) {
         console.error("❌ Error al consultar PRTG:", error.message);
+        // 🚨 Cualquier error se asume como caída
+        await handleDown();
+    }
+}
+
+// Función que maneja caída
+async function handleDown() {
+    const lastDown = await HistoricPrtgDown.findOne({
+        where: { upDatetime: null },
+        order: [["downDatetime", "DESC"]],
+    });
+
+    if (!lastDown) {
+        await HistoricPrtgDown.create({
+            downDatetime: getLocalDateTime(),
+        });
+        console.log("PRTG caído 🚨 → Se registró inicio de la caída.");
+    } else {
+        console.log("PRTG sigue caído (ya está registrado).");
+    }
+}
+
+// Función que maneja recuperación
+async function handleUp() {
+    const lastDown = await HistoricPrtgDown.findOne({
+        where: { upDatetime: null },
+        order: [["downDatetime", "DESC"]],
+    });
+
+    if (lastDown) {
+        const upTime = getLocalDateTime();
+        const downTime = new Date(lastDown.downDatetime);
+        const durationMs = new Date(upTime) - downTime;
+        const durationSec = Math.floor(durationMs / 1000);
+
+        await lastDown.update({
+            upDatetime: upTime,
+            duration: durationSec,
+        });
+
+        console.log(
+            `✅ PRTG volvió a estar activo. Caída cerrada. Duración: ${durationSec} segundos`
+        );
+    } else {
+        console.log("PRTG activo (no había caída abierta).");
     }
 }
 
