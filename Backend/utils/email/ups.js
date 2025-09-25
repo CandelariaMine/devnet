@@ -40,8 +40,6 @@ const fetchDataUps = async () => {
         if (batery === 2) {
           changeBateryCounter++;
         }
-
-        countUps++;
       });
     }
 
@@ -67,7 +65,7 @@ const fetchDataUps = async () => {
             </tr>
             <tr>
               <td style="text-align: center; border: 1px solid #ddd; padding: 4px;">Otro</td>
-              <td style="text-align: center; border: 1px solid #ddd; padding: 4px;">1</td>
+              <td style="text-align: center; border: 1px solid #ddd; padding: 4px;">${otro}</td>
             </tr>
             <tr>
               <td style="text-align: center; border: 1px solid #ddd; padding: 4px;">Cambio batería</td>
