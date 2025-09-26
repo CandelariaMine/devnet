@@ -118,9 +118,9 @@ def get_historic_cisco_data(ip):
             data["cisco_device_ip"] = data_backup['cisco_device_ip']
             data["cisco_device_name"] = data_backup['cisco_device_name']
             data["cisco_port"] = data_backup['cisco_port']
-            data["cisco_status"] = "Not Found"
+            data["cisco_status"] = data_backup["cisco_status"]
             data["cisco_mac_address"] = data_backup['cisco_mac_address']
-            data["cisco_status_device"] = data_backup['cisco_status_device']
+            data["cisco_status_device"] = 'Not Found'
             data["data_backup"] = True
             return data
         else:
