@@ -73,4 +73,6 @@ const sendEmailReport = async () => {
   }
 };
 
+sendEmailReport()
+
 module.exports = { sendEmailReport };
